@@ -1,18 +1,18 @@
 import './App.css';
+import { Todolist } from './Todolist';
 
 function App() {
-  debugger;
+
+let tasks1 = [
+  {id: 1, title: "learn", isDone: false}, 
+  {id: 2, title: "watch", isDone: false},
+  {id: 3, title: "read", isDone: true},
+]
+
   return (
     <div className="App">
-      <Todolist />
+      <Todolist title="what wacthing" tasks={tasks1} />
     </div>
-  );
-}
-
-function Todolist() {
-  debugger;
-  return (
-  <div>TODO LIST</div>
   );
 }
 
