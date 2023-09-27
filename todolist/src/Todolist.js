@@ -1,16 +1,22 @@
 import { useState } from "react";
 
 export function Todolist(props) {
-  
   return (
     <div>
-      {/* TODO LIST */}
       <h3>{props.title}</h3>
 
       <ul>
-        <li><input type='checkbox' checked={props.tasks[0].isDone} /><span>html&css</span></li>
-        <li><input type='checkbox' checked={props.tasks[1].isDone} /><span>js</span></li>
-        <li><input type='checkbox' checked={props.tasks[2].isDone} /><span>react</span></li>
+        {
+          //рисуем здесь li
+          //выводит столько li сколько id у переменной task в App.js
+          props.tasks.map((i) => {
+            return <li><input type='checkbox' checked={i.isDone} />
+              <span>{i.title}</span>
+              <button onClick={() => { props.removeTask(i.id) }}>x</button>
+            </li>
+          })
+        }
+
       </ul>
       <div>
         <button>All</button>
