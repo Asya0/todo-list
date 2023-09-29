@@ -12,6 +12,7 @@ function App() {
     { id: uuid(), title: "read", isDone: true },
     { id: uuid(), title: "sleep", isDone: true }
   ])
+  console.log(tasks)
   let FilterValueType = "all" || "completed" || "active"
 
 
@@ -28,7 +29,14 @@ function App() {
     let filteredTasks = tasks.filter((i) => i.id !== id)
     setTasks(filteredTasks)
   }
-
+  function addTask(title) {
+    let newTask = {
+      // id: uuid(), title: "New task", isDone: false,
+      id: uuid(), title: title, isDone: false,
+    }
+    let newTasks = [newTask, ...tasks]
+    setTasks(newTasks)
+  }
   let taskForTodolist = tasks;
   if (filter === "completed") {
     taskForTodolist = tasks.filter(i => i.isDone === true)
@@ -43,6 +51,7 @@ function App() {
         tasks={taskForTodolist}
         removeTask={removeTask}
         changeFilter={changeFilter}
+        addTask={addTask}
       />
     </div>
   );
