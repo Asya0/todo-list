@@ -1,19 +1,20 @@
 import './App.css';
 import { Todolist } from './Todolist';
 import { useState } from "react";
+import uuid from 'react-uuid';
 
 
 function App() {
 
-  let initTasks = [
-    { id: 1, title: "learn", isDone: false },
-    { id: 2, title: "watch", isDone: false },
-    { id: 3, title: "read", isDone: true },
-    { id: 4, title: "sleep", isDone: true }
-  ]
+  let [tasks, setTasks] = useState([
+    { id: uuid(), title: "learn", isDone: false },
+    { id: uuid(), title: "watch", isDone: false },
+    { id: uuid(), title: "read", isDone: true },
+    { id: uuid(), title: "sleep", isDone: true }
+  ])
   let FilterValueType = "all" || "completed" || "active"
 
-  let [tasks, setTasks] = useState(initTasks)
+
   //тоже самое что писать let [tasks, setTasks] = arr;
   let [filter, setFilter] = useState("all");
 
