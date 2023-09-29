@@ -31,7 +31,6 @@ function App() {
   }
   function addTask(title) {
     let newTask = {
-      // id: uuid(), title: "New task", isDone: false,
       id: uuid(), title: title, isDone: false,
     }
     let newTasks = [newTask, ...tasks]
