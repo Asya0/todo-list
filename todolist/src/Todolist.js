@@ -23,17 +23,11 @@ export function Todolist(props) {
     }
   }
   //показывает все таски
-  const onAllClickHandler = () => {
-    props.changeFilter("all")
-  }
+  const onAllClickHandler = () => { props.changeFilter("all", props.id) }
   //показывает только невыполненные, когда isDone = false
-  const onActiveClickHandler = () => {
-    props.changeFilter("active")
-  }
+  const onActiveClickHandler = () => { props.changeFilter("active", props.id) }
   //только выполненные, когда isDone = true
-  const onCompletedClickHandler = () => {
-    props.changeFilter("completed")
-  }
+  const onCompletedClickHandler = () => { props.changeFilter("completed", props.id) }
 
 
 
