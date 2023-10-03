@@ -2,9 +2,19 @@
   display: flex;
   padding: 30px;
 }
-.App > div {
+
+.App>div {
   margin-right: 50px;
 }
+
 li {
   list-style-type: none;
+}
+
+.error {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
 }

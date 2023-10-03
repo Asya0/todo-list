@@ -2,21 +2,25 @@ import { useState } from "react";
 
 export function Todolist(props) {
   const [newTaskTitle, setNewTaskTitle] = useState("")
+  const [error, setError] = useState("")
 
   const onNewTaskChangeHandler = (e) => {
     setNewTaskTitle(e.currentTarget.value)
   }
   const onKeyPressHandler = (e) => {
+    setError(null) //убирает error & error-mes если после ошибки юзер начинает набирать слова
     if (e.charCode === 13) {
       addTask()
     }
   }
+  //пришлось сделать через !, потому что до этого добавляла таску
   const addTask = () => {
-    if (newTaskTitle.trim() === "") {
-      return;
+    if (newTaskTitle.trim() !== "") {
+      props.addTask(newTaskTitle);
+      setNewTaskTitle("");
+    } else {
+      setError("field request");
     }
-    props.addTask(newTaskTitle);
-    setNewTaskTitle("");
   }
   //показывает все таски
   const onAllClickHandler = () => {
@@ -41,9 +45,10 @@ export function Todolist(props) {
           value={newTaskTitle}
           onChange={onNewTaskChangeHandler}
           onKeyPress={onKeyPressHandler}
+          className={error ? "error" : " "}
         />
-        <button onClick={addTask}
-        >+</button>
+        <button onClick={addTask}        >+</button>
+        {error && <div className="error-message">{error}</div>}
       </div>
       <ul>
         {
