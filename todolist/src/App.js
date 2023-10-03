@@ -9,8 +9,8 @@ function App() {
   let [tasks, setTasks] = useState([
     { id: uuid(), title: "learn", isDone: false },
     { id: uuid(), title: "watch", isDone: false },
-    { id: uuid(), title: "read", isDone: true },
-    { id: uuid(), title: "sleep", isDone: true }
+    { id: uuid(), title: "read", isDone: false },
+    { id: uuid(), title: "sleep", isDone: false }
   ])
   let FilterValueType = "all" || "completed" || "active"
 
@@ -61,6 +61,7 @@ function App() {
         changeFilter={changeFilter}
         addTask={addTask}
         changeTaskStatus={changeStatus}
+        filter={filter}
       />
     </div>
   );

@@ -18,3 +18,11 @@ li {
 .error-message {
   color: red;
 }
+
+.active-filter {
+  background-color: rgb(176, 239, 160);
+}
+
+.is-done {
+  opacity: .5;
+}
