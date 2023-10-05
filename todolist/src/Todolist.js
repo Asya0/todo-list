@@ -16,7 +16,7 @@ export function Todolist(props) {
   //пришлось сделать через !, потому что до этого добавляла таску
   const addTask = () => {
     if (newTaskTitle.trim() !== "") {
-      props.addTask(newTaskTitle);
+      props.addTask(newTaskTitle.trim(), props.id);
       setNewTaskTitle("");
     } else {
       setError("field request");
@@ -28,12 +28,12 @@ export function Todolist(props) {
   const onActiveClickHandler = () => { props.changeFilter("active", props.id) }
   //только выполненные, когда isDone = true
   const onCompletedClickHandler = () => { props.changeFilter("completed", props.id) }
-
+  const removeTodolist = () => { props.removeTodolist(props.id); }
 
 
   return (
     <div>
-      <h3>{props.title}</h3>
+      <h3>{props.title}<button onClick={removeTodolist}>x</button></h3>
       <div>
         <input
           value={newTaskTitle}
@@ -48,10 +48,10 @@ export function Todolist(props) {
         {
           //выводит столько li сколько id у переменной task в App.js
           props.tasks.map((t) => {
-            const onRemoveHandler = () => { props.removeTask(t.id) }
+            const onRemoveHandler = () => { props.removeTask(t.id, props.id) }
             const onChangeHandler = (e) => {
               props.changeTaskStatus(t.id, e.currentTarget.checked)
-              console.log(props.changeTaskStatus(t.id, e.currentTarget.checked))
+              console.log(props.changeTaskStatus(t.id, e.currentTarget.checked, props.id))
             }
 
 

@@ -6,12 +6,6 @@ import uuid from 'react-uuid';
 
 function App() {
 
-  let [tasks, setTasks] = useState([
-    { id: uuid(), title: "learn", isDone: false },
-    { id: uuid(), title: "watch", isDone: false },
-    { id: uuid(), title: "read", isDone: false },
-    { id: uuid(), title: "sleep", isDone: false }
-  ])
   let FilterValueType = "all" || "completed" || "active"
 
 
@@ -19,26 +13,30 @@ function App() {
   let [filter, setFilter] = useState("all");
 
 
-  function removeTask(id) {
+  function removeTask(id, todolistId) {
+    let tasks = tasksObj[todolistId];
     // фильтровали для того чтобы удалить таску
-    let filteredTasks = tasks.filter((i) => i.id !== id)
-    setTasks(filteredTasks)
+    let filteredTasks = tasks.filter((t) => t.id !== id)
+    tasksObj[todolistId] = filteredTasks;
+    setTasks({ ...tasksObj })
   }
-  function addTask(title) {
-    let task = {
-      id: uuid(), title: title, isDone: false,
-    }
+  function addTask(title, todolistId) {
+    let task = { id: uuid(), title: title, isDone: false, }
+    let tasks = tasksObj[todolistId];
     let newTasks = [task, ...tasks]
-    setTasks(newTasks)
+    tasksObj[todolistId] = newTasks;
+    setTasks({ ...tasksObj })
   }
-  function changeStatus(taskId, isDone) {
-    let task = tasks.find(t => t.id === taskId)
-    //псевдоистина
-    if (task) {
-      task.isDone = isDone;
-    }
-    setTasks([...tasks])
 
+  function changeStatus(taskId, isDone, todolistId) {
+    let tasks = tasksObj[todolistId];
+    if (tasks) {
+      let task = tasks.find(t => t.id === taskId);
+      if (task) {
+        task.isDone = isDone;
+        setTasks({ ...tasksObj });
+      }
+    }
   }
 
   function changeFilter(FilterValueType, todolistId) {
@@ -47,29 +45,52 @@ function App() {
       todolist.filter = FilterValueType;
       setTodolists([...todolists]);
     }
-    // setFilter(FilterValueType)
   }
+
+  let todolistId1 = uuid();
+  let todolistId2 = uuid();
 
   let [todolists, setTodolists] = useState([
     {
-      id: uuid(), title: "what to do", filter: "active",
+      id: todolistId1, title: "what to do", filter: "active",
     },
     {
-      id: uuid(), title: "what buy", filter: "completed",
+      id: todolistId2, title: "what buy", filter: "completed",
     }
   ])
+
+  let removeTodolist = (todolistId) => {
+    let filteredTodolist = todolists.filter(tl => tl.id !== todolistId)
+    setTodolists(filteredTodolist);
+    delete tasksObj[todolistId]
+    setTasks({ ...tasksObj })
+  }
+
+  let [tasksObj, setTasks] = useState({
+    [todolistId1]: [
+      { id: uuid(), title: "learn", isDone: false },
+      { id: uuid(), title: "watch", isDone: false },
+      { id: uuid(), title: "read", isDone: false },
+      { id: uuid(), title: "sleep", isDone: false },
+    ],
+    [todolistId2]: [
+      { id: uuid(), title: "book", isDone: false },
+      { id: uuid(), title: "milk", isDone: true },
+    ]
+  })
+
 
   return (
     <div className="App">
       {
         todolists.map((tl) => {
 
-          let taskForTodolist = tasks;
+          let taskForTodolist = tasksObj[tl.id];
           if (tl.filter === "completed") {
-            taskForTodolist = tasks.filter(i => i.isDone === true)
+            taskForTodolist = taskForTodolist.filter(i => i.isDone === true)
           }
           if (tl.filter === "active") {
-            taskForTodolist = tasks.filter(i => i.isDone === false)
+            taskForTodolist = taskForTodolist.filter(i => i.isDone === false)
           }
 
           return <Todolist
@@ -82,6 +103,7 @@ function App() {
             addTask={addTask}
             changeTaskStatus={changeStatus}
             filter={tl.filter}
+            removeTodolist={removeTodolist}
           />
         })
       }
