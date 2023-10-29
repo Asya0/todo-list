@@ -1,4 +1,5 @@
-import {AddItemForm} from "./AddItemForm";
+import { AddItemForm } from "./AddItemForm";
+import { EditableSpan } from "./EditableSpan";
 
 export function Todolist(props) {
 
@@ -17,15 +18,15 @@ export function Todolist(props) {
     const removeTodolist = () => {
         props.removeTodolist(props.id);
     }
-const addTask = (title) => {
-    props.addTask(title, props.id)
-}
+    const addTask = (title) => {
+        props.addTask(title, props.id)
+    }
     return (
         <div>
             <h3>{props.title}
                 <button onClick={removeTodolist}>x</button>
             </h3>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} />
             <ul>
                 {
                     //выводит столько li сколько id у переменной task в App.js
@@ -43,7 +44,7 @@ const addTask = (title) => {
                             type='checkbox'
                             onChange={onChangeHandler}
                         />
-                            <span>{t.title}</span>
+                            <EditableSpan title={t.title} onChange={(value) => { alert(value) }} />
                             <button onClick={onRemoveHandler}>x</button>
                         </li>
                     })
@@ -52,17 +53,16 @@ const addTask = (title) => {
             </ul>
             <div>
                 <button className={props.filter === "all" ? "active-filter" : ""}
-                        onClick={onAllClickHandler}>All
+                    onClick={onAllClickHandler}>All
                 </button>
                 <button className={props.filter === "active" ? "active-filter" : ""}
-                        onClick={onActiveClickHandler}>Active
+                    onClick={onActiveClickHandler}>Active
                 </button>
                 <button className={props.filter === "completed" ? "active-filter" : ""}
-                        onClick={onCompletedClickHandler}>Completed
+                    onClick={onCompletedClickHandler}>Completed
                 </button>
             </div>
         </div>
     );
 }
-
 
