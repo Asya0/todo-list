@@ -2,6 +2,7 @@ import './App.css';
 import { Todolist } from './Todolist';
 import { useState } from "react";
 import uuid from 'react-uuid';
+import {AddItemForm} from "./AddItemForm";
 
 
 function App() {
@@ -52,10 +53,10 @@ function App() {
 
   let [todolists, setTodolists] = useState([
     {
-      id: todolistId1, title: "what to do", filter: "active",
+      id: todolistId1, title: "what to do", filter: "all",
     },
     {
-      id: todolistId2, title: "what buy", filter: "completed",
+      id: todolistId2, title: "what buy", filter: "all",
     }
   ])
 
@@ -79,9 +80,22 @@ function App() {
     ]
   })
 
+  function addTodolist(title) {
+    let todolist = {
+      id: uuid(),
+      filter: "all",
+      title: title
+    }
+    setTodolists([todolist, ...todolists]);
+    setTasks({
+      ...tasksObj,
+      [todolist.id]: []
+    })
+  }
 
   return (
     <div className="App">
+      <AddItemForm addItem={(addTodolist)}/>
       {
         todolists.map((tl) => {
 
