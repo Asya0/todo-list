@@ -33,7 +33,7 @@ export function AddItemForm(props) {
                 onKeyPress={onKeyPressHandler}
                 className={error ? "error" : " "}
             />
-            <button onClick={addTask}>+</button>
+            <button onClick={addTask}>Добавить</button>
             {error && <div className="error-message">{error}</div>}
         </div>
     )
